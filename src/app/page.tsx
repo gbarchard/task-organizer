@@ -1,10 +1,9 @@
 'use client'
 
-import HELLO_WORLD from '@/graphql/queries/helloWorld.gql'
-import { useQuery } from '@apollo/client'
+import { useHelloWorldQuery } from '@/graphql/generated/graphql'
 
 export default function Home() {
-  const { data } = useQuery(HELLO_WORLD)
+  const { data } = useHelloWorldQuery()
   console.log('data', data)
   return <main>Hello World</main>
 }
