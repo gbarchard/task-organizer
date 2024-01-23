@@ -1,11 +1,9 @@
-import { Resolvers } from '../generated/graphql'
+import { Resolvers } from '../generated/resolvers'
+
+import * as Query from './queries'
 
 const resolvers: Resolvers = {
-  Query: {
-    hello: () => {
-      return 'world'
-    },
-  },
+  Query,
 }
 
 export default resolvers
