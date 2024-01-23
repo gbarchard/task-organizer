@@ -1,6 +1,6 @@
 'use client'
 
-import { useHelloWorldQuery } from '@/graphql/generated/graphql'
+import { useHelloWorldQuery } from '@/graphql/generated/hooks'
 
 export default function Home() {
   const { data } = useHelloWorldQuery()
