@@ -1,5 +1,16 @@
 import { QueryResolvers } from '@/graphql/generated/resolvers'
+import { getDb } from '@/services/database.service'
 
-export const hello: QueryResolvers['hello'] = () => {
-  return 'world'
+const HELLO_COLLECTION = 'hello'
+
+type HelloCollection = { hello: string }
+
+export const hello: QueryResolvers['hello'] = async (a, b, c) => {
+  const db = await getDb()
+  const helloCollection = db.collection<HelloCollection>(HELLO_COLLECTION)
+  const doc = await helloCollection.findOne()
+  if (!doc) {
+    throw Error('')
+  }
+  return doc.hello
 }
