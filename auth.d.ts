@@ -6,6 +6,6 @@ declare module 'next-auth' {
     id: string
   }
   export interface Session extends Session {
-    user: User
+    user?: User
   }
 }
