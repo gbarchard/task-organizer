@@ -1,11 +1,13 @@
 import { startServerAndCreateNextHandler } from '@as-integrations/next'
 import { ApolloServer } from '@apollo/server'
+import { GraphQLContext } from '@/graphql/context'
 import typeDefs from '@/graphql/schema/schema.graphql'
 import resolvers from '@/graphql/resolvers/resolvers'
+import { GraphQLError } from 'graphql'
 import { getServerSession } from 'next-auth/next'
 import { authOptions } from '../auth/[...nextauth]/route'
 
-const server = new ApolloServer({
+const server = new ApolloServer<GraphQLContext>({
   resolvers,
   typeDefs,
 })
@@ -13,8 +15,15 @@ const server = new ApolloServer({
 const handler = startServerAndCreateNextHandler(server, {
   context: async () => {
     const session = await getServerSession(authOptions)
-    console.log('the session', session)
-    return {}
+    if (!session?.user) {
+      throw new GraphQLError('Unauthenticated', {
+        extensions: {
+          code: 'UNAUTHENTICATED',
+          http: { status: 401 },
+        },
+      })
+    }
+    return { user: session.user }
   },
 })
 
