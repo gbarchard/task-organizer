@@ -1,3 +1,5 @@
+import { MongoDBAdapter } from '@next-auth/mongodb-adapter'
+import clientPromise from '@/services/database.service'
 import NextAuth, { AuthOptions } from 'next-auth'
 import GoogleProvider from 'next-auth/providers/google'
 
@@ -8,6 +10,15 @@ export const authOptions: AuthOptions = {
       clientSecret: process.env.GOOGLE_CLIENT_SECRET ?? '',
     }),
   ],
+  callbacks: {
+    session({ session, user }) {
+      if (session.user) {
+        session.user.id = user.id
+      }
+      return session
+    },
+  },
+  adapter: MongoDBAdapter(clientPromise, { databaseName: 'task_organizer' }),
   secret: process.env.NEXTAUTH_SECTRET,
 }
 

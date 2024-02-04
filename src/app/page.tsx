@@ -19,6 +19,7 @@ export default function Home() {
           <img src={session.user.image} width={30} height={30} />
           // <Image alt="" src={session.user.image} width={30} height={30} />
         )}
+        <div>{`id: ${session.user.id}`}</div>
         <button onClick={() => signOut()}>Sign out</button>
       </>
     )
