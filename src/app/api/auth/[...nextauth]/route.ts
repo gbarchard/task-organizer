@@ -17,6 +17,13 @@ export const authOptions: AuthOptions = {
       }
       return session
     },
+    redirect: ({ url, baseUrl }) => {
+      const fullUrl = url.startsWith('/') ? `${baseUrl}${url}` : url
+      if (fullUrl === baseUrl) {
+        return '/home'
+      }
+      return baseUrl
+    },
   },
   adapter: MongoDBAdapter(clientPromise, { databaseName: 'task_organizer' }),
   secret: process.env.NEXTAUTH_SECTRET,

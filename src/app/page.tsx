@@ -1,33 +1,22 @@
 'use client'
 
-import { useHelloWorldQuery } from '@/graphql/generated/hooks'
-import { useSession, signIn, signOut } from 'next-auth/react'
-import Image from 'next/image'
+import { useSession, signIn } from 'next-auth/react'
+import { useRouter } from 'next/navigation'
+import { useEffect } from 'react'
 
 export default function Home() {
-  const { data } = useHelloWorldQuery()
   const { data: session, status } = useSession()
+
+  const router = useRouter()
+
+  useEffect(() => {
+    if (session?.user) {
+      router.push('/home')
+    }
+  }, [router, session])
 
   if (status === 'loading') {
     return 'loading...'
   }
-  if (session) {
-    return (
-      <>
-        Signed in as {session.user?.email} <br />
-        {session.user?.image && (
-          <img src={session.user.image} width={30} height={30} />
-          // <Image alt="" src={session.user.image} width={30} height={30} />
-        )}
-        <div>{`id: ${session.user.id}`}</div>
-        <button onClick={() => signOut()}>Sign out</button>
-      </>
-    )
-  }
-  return (
-    <>
-      Not signed in <br />
-      <button onClick={() => signIn()}>Sign in</button>
-    </>
-  )
+  return <button onClick={() => signIn()}>Sign in</button>
 }
