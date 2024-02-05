@@ -5,7 +5,10 @@ const config: Config = {
     './src/pages/**/*.{js,ts,jsx,tsx,mdx}',
     './src/components/**/*.{js,ts,jsx,tsx,mdx}',
     './src/app/**/*.{js,ts,jsx,tsx,mdx}',
+    './node_modules/flowbite-react/lib/**/*.js',
   ],
+  darkMode: 'media',
+  plugins: [require('flowbite/plugin')],
   theme: {
     extend: {
       backgroundImage: {
@@ -15,6 +18,5 @@ const config: Config = {
       },
     },
   },
-  plugins: [],
 }
 export default config
