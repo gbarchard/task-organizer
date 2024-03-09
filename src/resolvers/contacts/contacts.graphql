@@ -1,0 +1,22 @@
+type Query {
+  getContact(id: ObjectId!): Contact
+  getContacts: [Contact!]
+}
+
+type Mutation {
+  createContact(contact: ContactInput!): MutationResponse!
+  updateContact(id: ObjectId!, contact: ContactInput!): MutationResponse!
+  deleteContact(id: ObjectId!): MutationResponse!
+}
+
+type Contact {
+  _id: ObjectId!
+  firstName: String!
+  lastName: String!
+  userId: ObjectId!
+}
+
+input ContactInput {
+  firstName: String!
+  lastName: String!
+}

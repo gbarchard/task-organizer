@@ -1,0 +1,8 @@
+type MutationResponse {
+  code: Int!
+  sucess: Boolean!
+  message: String!
+}
+
+# Scalars
+scalar ObjectId

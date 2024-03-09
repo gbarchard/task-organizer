@@ -2,21 +2,47 @@ import type { CodegenConfig } from '@graphql-codegen/cli'
 
 const config: CodegenConfig = {
   overwrite: true,
-  schema: 'src/graphql/schema/schema.graphql',
-  documents: 'src/graphql/**/*.gql',
+  schema: 'src/resolvers/**/*.graphql',
+  documents: 'src/app/**/*.gql',
   generates: {
-    'src/graphql/generated/hooks.ts': {
+    'src/gql-types.generated.ts': {
+      plugins: ['typescript'],
+    },
+    'src/': {
       plugins: [
         'typescript-operations',
         'typescript-react-apollo',
-        'typescript',
+        { add: { content: "import { ObjectId } from 'mongodb'" } },
       ],
+      preset: 'near-operation-file',
+      presetConfig: {
+        extension: '.generated.ts',
+        baseTypesPath: 'gql-types.generated.ts',
+      },
+      config: {
+        scalars: {
+          ObjectId: 'ObjectId',
+        },
+      },
     },
-    'src/graphql/generated/resolvers.ts': {
-      plugins: ['typescript', 'typescript-resolvers'],
+    'src/resolvers/resolvers.generated.ts': {
+      plugins: [
+        'typescript',
+        'typescript-resolvers',
+        {
+          add: {
+            content: "import { ObjectId } from 'mongodb'",
+          },
+        },
+      ],
       config: {
         useIndexSignature: true,
-        contextType: '../context#GraphQLContext',
+        contextType: '../graphql/context#GraphQLContext',
+        maybeValue:
+          'T extends PromiseLike<infer U> ? Promise<U | null> : T | null',
+        scalars: {
+          ObjectId: 'ObjectId',
+        },
       },
     },
   },

@@ -1,11 +1,11 @@
 import { startServerAndCreateNextHandler } from '@as-integrations/next'
 import { ApolloServer } from '@apollo/server'
 import { GraphQLContext } from '@/graphql/context'
-import typeDefs from '@/graphql/schema/schema.graphql'
-import resolvers from '@/graphql/resolvers/resolvers'
+import resolvers from '@/resolvers/resolvers'
+import typeDefs from '@/resolvers/typeDefs'
 import { GraphQLError } from 'graphql'
 import { getServerSession } from 'next-auth/next'
-import { authOptions } from '../auth/[...nextauth]/route'
+import { authOptions } from '../auth/[...nextauth]/authOptions'
 
 const server = new ApolloServer<GraphQLContext>({
   resolvers,

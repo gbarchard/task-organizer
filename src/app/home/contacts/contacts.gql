@@ -1,0 +1,13 @@
+query GetContacts {
+  getContacts {
+    _id
+    firstName
+    lastName
+  }
+}
+
+mutation CreateContact($contact: ContactInput!) {
+  createContact(contact: $contact) {
+    code
+  }
+}

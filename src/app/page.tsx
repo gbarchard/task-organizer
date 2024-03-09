@@ -1,6 +1,6 @@
 'use client'
 
-import { Button, Spinner } from 'flowbite-react'
+import { Button } from 'flowbite-react'
 import { useSession, signIn } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
 import { useEffect } from 'react'
@@ -22,7 +22,7 @@ export default function Home() {
   }
 
   return (
-    <Button className="mx-auto my-auto w-1/2" onClick={() => signIn()}>
+    <Button pill className="mx-auto my-auto w-1/2" onClick={() => signIn()}>
       Sign In
     </Button>
   )

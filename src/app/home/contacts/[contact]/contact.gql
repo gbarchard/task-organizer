@@ -1,0 +1,19 @@
+query GetContact($id: ObjectId!) {
+  getContact(id: $id) {
+    _id
+    firstName
+    lastName
+  }
+}
+
+mutation DeleteContact($id: ObjectId!) {
+  deleteContact(id: $id) {
+    code
+  }
+}
+
+mutation UpdateContact($id: ObjectId!, $contact: ContactInput!) {
+  updateContact(id: $id, contact: $contact) {
+    code
+  }
+}
